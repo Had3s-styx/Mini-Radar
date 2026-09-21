@@ -1,19 +1,26 @@
 #include <Arduino.h>        // grabs the arduino dictionary so the board knows serial and delay
+#include <Servo.h>         
 
 // Names set for the pins the wires are plugged into
 const int TRIG_PIN = 9;     // sets the trig pin variable to 9
 const int ECHO_PIN = 10;    // sets the echo pin variable to 10
+const int SERVO_PIN = 6;    // sets the servo pin variable to 6
+
+Servo radarServo;
 
 void setup() // Runs one time when the board turns on.
 {
   Serial.begin(9600);
   pinMode(TRIG_PIN, OUTPUT);      // Trig pin SENDS signlas out.
   pinMode(ECHO_PIN, INPUT);       // Echo Pin LISTENS for signals.
+  radarServo.attach(SERVO_PIN);   // attaching the servo to the pin defined 6
 }
 
 void loop() 
 {
   // Step 1
+  radarServo.write(90);           // set the servo angle
+  delay(20);                      // delay while the servo settles
   digitalWrite(TRIG_PIN, LOW);    // Makes sure the Trig Pin starts at a quiet state of 0v
   delayMicroseconds(2);           // Short microsecond delay
   digitalWrite(TRIG_PIN, HIGH);   // HIGH = on, 5V starts the ping 
@@ -35,7 +42,6 @@ void loop()
   Serial.print("Distance: ");
   Serial.print(distance);
   Serial.println(" cm");
-
-  delay(500);
+  delay(5000);
 
 }
