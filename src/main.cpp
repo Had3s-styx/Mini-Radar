@@ -16,16 +16,47 @@ void setup() // Runs one time when the board turns on.
   radarServo.attach(SERVO_PIN);   // attaching the servo to the pin defined 6
 }
 
+float getDistance()
+{
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(10);
+
+  long duration = pulseIn(ECHO_PIN, HIGH);    
+
+  float distanceInch = (duration * 0.0343 / 2) * 0.393701;  
+
+  return distanceInch;
+}
 void loop() 
 {
   for (int angle = 0; angle <=180; angle += 2)
   {
     radarServo.write(angle);
     delay(15);
+    
+    float distance = getDistance();
+    Serial.print("Angle, Distance: ");
+    Serial.print(angle); 
+    Serial.print(" Degrees, ");
+    Serial.print(distance);
+    Serial.println(" inches");
+    delay(10);
   }
   for (int angle = 180; angle >= 0; angle -= 2)
   {
     radarServo.write(angle);
     delay(15);
+
+    float distance = getDistance();
+    Serial.print("Angle, Distance: ");
+    Serial.print(angle); 
+    Serial.print(" Degrees, ");
+    Serial.print(distance);
+    Serial.println(" inches");
+    delay(10);
   }
 }
