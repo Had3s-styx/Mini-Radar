@@ -25,9 +25,17 @@ void loop()
   // pulseIn is like a stopwatch: starts when echo turns on and stops when it turns off
   long duration = pulseIn(ECHO_PIN, HIGH);    
 
-  //Step 3
-  Serial.print("Echo time (microseconds): "); // writes the label but stays on the same line.
-  Serial.println(duration);                   // Write the number then jumps to the next line
-  delay(500);                                 // delays half a second so the screen doesnt flood
+  // Step 3
+  // Distance = speed x time
+  // sound travels at about 343 meters per second. in centimeters per microsecond thats 0.0343
+  // using distance = duration * 0.0343 / 2
+  float distance = duration * 0.0343 / 2; // time x speed of sound cut in half for one-way
+
+  // Step 4 : show the distance label, the distance and unit of measurement
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  delay(500);
 
 }
