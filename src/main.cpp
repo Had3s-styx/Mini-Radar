@@ -47,7 +47,7 @@ void loop()
     Serial.print(angle);
     Serial.print(",");
     Serial.println(distance);
-    delay(10);
+    delay(100);
   }
   for (int angle = 180; angle >= 0; angle -= 2)
   {
@@ -58,6 +58,6 @@ void loop()
     Serial.print(angle);
     Serial.print(",");
     Serial.println(distance);
-    delay(10);
+    delay(100);
   }
 }
