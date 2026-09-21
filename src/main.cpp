@@ -5,6 +5,9 @@
 const int TRIG_PIN = 9;     // sets the trig pin variable to 9
 const int ECHO_PIN = 10;    // sets the echo pin variable to 10
 const int SERVO_PIN = 6;    // sets the servo pin variable to 6
+// MAX DISTANCE HC SR04
+const float MAX_DISTANCE_CM = 450;
+const long MAX_ECHO_US = MAX_DISTANCE_CM * 2 / 0.0343;
 
 Servo radarServo;
 
@@ -25,7 +28,12 @@ float getDistance()
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(10);
 
-  long duration = pulseIn(ECHO_PIN, HIGH);    
+  long duration = pulseIn(ECHO_PIN, HIGH, MAX_ECHO_US);
+
+  if (duration == 0)
+  {
+    return MAX_DISTANCE_CM * 0.393701; // converts the return to inches
+  }
 
   float distanceInch = (duration * 0.0343 / 2) * 0.393701;  
 
