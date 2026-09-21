@@ -5,9 +5,6 @@
 const int TRIG_PIN = 9;     // sets the trig pin variable to 9
 const int ECHO_PIN = 10;    // sets the echo pin variable to 10
 const int SERVO_PIN = 6;    // sets the servo pin variable to 6
-// MAX DISTANCE HC SR04
-const float MAX_DISTANCE_CM = 450;
-const long MAX_ECHO_US = MAX_DISTANCE_CM * 2 / 0.0343;
 
 Servo radarServo;
 
@@ -28,11 +25,11 @@ float getDistance()
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(10);
 
-  long duration = pulseIn(ECHO_PIN, HIGH, MAX_ECHO_US);
+  long duration = pulseIn(ECHO_PIN, HIGH, 26239);
 
   if (duration == 0)
   {
-    return MAX_DISTANCE_CM * 0.393701; // converts the return to inches
+    return -1;
   }
 
   float distanceInch = (duration * 0.0343 / 2) * 0.393701;  
@@ -47,11 +44,9 @@ void loop()
     delay(15);
     
     float distance = getDistance();
-    Serial.print("Angle, Distance: ");
-    Serial.print(angle); 
-    Serial.print(" Degrees, ");
-    Serial.print(distance);
-    Serial.println(" inches");
+    Serial.print(angle);
+    Serial.print(",");
+    Serial.println(distance);
     delay(10);
   }
   for (int angle = 180; angle >= 0; angle -= 2)
@@ -60,11 +55,9 @@ void loop()
     delay(15);
 
     float distance = getDistance();
-    Serial.print("Angle, Distance: ");
-    Serial.print(angle); 
-    Serial.print(" Degrees, ");
-    Serial.print(distance);
-    Serial.println(" inches");
+    Serial.print(angle);
+    Serial.print(",");
+    Serial.println(distance);
     delay(10);
   }
 }
