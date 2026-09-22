@@ -256,7 +256,6 @@ void loop() // main loop
     Serial.println(distance);
     recordDot(angle, distance);
     drawRadar(angle);
-    delay(75);
   }
   for (int angle = 180; angle >= 0; angle -= 2)   // starts the servo at 180 and sweeps till 0 
   {
@@ -270,6 +269,5 @@ void loop() // main loop
     Serial.println(distance);
     recordDot(angle, distance);
     drawRadar(angle);
-    delay(75);
   }
 }
